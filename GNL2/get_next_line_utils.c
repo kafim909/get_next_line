@@ -6,32 +6,45 @@
 /*   By: mtournay <mtournay@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 14:59:09 by mtournay          #+#    #+#             */
-/*   Updated: 2021/04/20 15:43:04 by mtournay         ###   ########.fr       */
+/*   Updated: 2021/04/24 18:50:27 by mtournay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	len(char *s)
+
+int	copy(char *s1, char *s2, int start, int end)
 {
 	int i;
 
 	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
+	// printf("***%s***\n", s1);
+	// printf("***[%s][%d][%d]***\n", s2, start, end);
+	while (start < end && s2[i])
+	{
+	//	printf("[%d][%d]\n", start, end);
+		// printf("[%c]", s2[i]);
+		s1[start++] = s2[i++];
+	}
+	s1[start] = '\0';
+//	printf("****%s**\n", s1);
+	return (start);
 }
 
-int	len_to_nl(char *s)
+int	len(char *s, int bol)
 {
 	int	i;
 
 	i = 0;
 	if (!s)
 		return (0);
-	while (s[i] && s[i] != '\n')
+	if (bol == 1)
+	{
+		while (s[i] && s[i] != '\n')
+			i++;
+		return (i);
+	}
+	while (s[i])
 		i++;
 	return (i);
 }
@@ -39,9 +52,15 @@ int	len_to_nl(char *s)
 int	free_all(char *line, char *save)
 {
 	if (save)
+	{
 		free(save);
+		save = NULL;
+	}
 	if (line)
+	{
 		free(line);
+		line = NULL;
+	}
 	return (-1);
 }
 
@@ -65,7 +84,9 @@ int	is_new_save(char *s)
 {
 	int	i;
 
-	i = len_to_nl(s);
+	if (!s)
+		return (0);
+	i = len(s, 1);
 	while (s[i] == '\n' && s[i])
 		i++;
 	if (s[i])

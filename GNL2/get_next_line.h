@@ -6,7 +6,7 @@
 /*   By: mtournay <mtournay@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 14:52:52 by mtournay          #+#    #+#             */
-/*   Updated: 2021/04/21 10:47:49 by mtournay         ###   ########.fr       */
+/*   Updated: 2021/04/24 17:40:42 by mtournay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,21 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+#include <stdio.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 12
 # endif
 
+int     copy(char *s1, char *s2, int start, int end);
+int     len(char *s, int bol);
+int     free_all(char *line, char *save);
+int     is_nl(char *s);
+int     is_new_save(char *s);
+int     new_save(char *save, char *buff, char *line, int bol);
+int     save_to_line(char *line, char *save);
+char    *join(char *line, char *save, char *buff);
+int     get_line(char **line, char *save, char *buff, int fd);
 int		get_next_line(int fd, char **line);
-int		is_nl(char *s);
-int		len(char *s);
-int		len_to_nl(char *s);
-int		free_all(char *line, char *save);
-int		is_new_save(char *s);
-char    *dup_to_line(char *str);
-char	*new_save(char *str);
-char	*join(char *src, char *dst);
 
 #endif
